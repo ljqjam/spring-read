@@ -298,6 +298,7 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 				// Guarantee initialization of beans that the current bean depends on.
 				String[] dependsOn = mbd.getDependsOn();
 				if (dependsOn != null) {
+					//依赖的bean
 					for (String dep : dependsOn) {
 						if (isDependent(beanName, dep)) {
 							throw new BeanCreationException(mbd.getResourceDescription(), beanName,
@@ -305,6 +306,7 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 						}
 						registerDependentBean(dep, beanName);
 						try {
+							//有依赖的bean先拿出来
 							getBean(dep);
 						}
 						catch (NoSuchBeanDefinitionException ex) {
@@ -317,9 +319,10 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 				// Create bean instance.
 				if (mbd.isSingleton()) {
 					//sharedInstance通过getSingleton拿到是null（之前没有过，也不是正在创）
+					//FIXME 重要
 					sharedInstance = getSingleton(beanName, () -> {
 						try {
-							//FIXME 重要 创建bean的实例到sharedInstance
+							//创建bean的实例到sharedInstance
 							return createBean(beanName, mbd, args);
 						}
 						catch (BeansException ex) {
@@ -1724,6 +1727,7 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 				if (scope == null) {
 					throw new IllegalStateException("No Scope registered for scope name '" + mbd.getScope() + "'");
 				}
+				//注册
 				scope.registerDestructionCallback(beanName,
 						new DisposableBeanAdapter(bean, beanName, mbd, getBeanPostProcessors(), acc));
 			}

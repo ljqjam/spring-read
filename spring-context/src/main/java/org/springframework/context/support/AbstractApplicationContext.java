@@ -909,6 +909,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 		clearResourceCaches();
 
 		// Initialize lifecycle processor for this context.
+		//初始化和生命周期有关的后置处理器
 		initLifecycleProcessor();
 
 		// Propagate refresh to lifecycle processor first.
