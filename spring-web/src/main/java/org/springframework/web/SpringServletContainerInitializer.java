@@ -108,6 +108,9 @@ import org.springframework.util.ReflectionUtils;
  * @since 3.1
  * @see #onStartup(Set, ServletContext)
  * @see WebApplicationInitializer
+ * 实现了ServletContainerInitializer，整合springMVC时，
+ * 可用SPI机制，在META-INFO/services/javaxservlet.ServletContainerInitializer指定，web容器启动时扫描调用
+ * HandlesTypes及为关心这个接口的所有子类
  */
 @HandlesTypes(WebApplicationInitializer.class)
 public class SpringServletContainerInitializer implements ServletContainerInitializer {
@@ -168,6 +171,7 @@ public class SpringServletContainerInitializer implements ServletContainerInitia
 
 		servletContext.log(initializers.size() + " Spring WebApplicationInitializers detected on classpath");
 		AnnotationAwareOrderComparator.sort(initializers);
+		//收集全部WebApplicationInitializer调用
 		for (WebApplicationInitializer initializer : initializers) {
 			initializer.onStartup(servletContext);
 		}

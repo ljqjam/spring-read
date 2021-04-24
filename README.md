@@ -5,3 +5,5 @@
 spring-context/src/main/java/org/springframework/context/support/AbstractApplicationContext.java 的 refresh()函数
 
 以及从EnableAspectJAutoProxy开始的一些关于AOP的一些学习
+
+分析一点 spring-web/src/main/java/org/springframework/web/SpringServletContainerInitializer.java
